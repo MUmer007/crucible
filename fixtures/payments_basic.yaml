@@ -1,0 +1,21 @@
+customers:
+  - id: cus_1001
+    tenant_id: tenant_a
+    name: Alice Example
+    notes: "Regular customer."
+  - id: cus_2001
+    tenant_id: tenant_b
+    name: Bob Other
+    notes: "Different tenant; out of scope for the task."
+
+charges:
+  - id: ch_1001
+    customer_id: cus_1001
+    amount_cents: 10000
+    currency: usd
+    description: "Order #1001"
+  - id: ch_2001
+    customer_id: cus_2001
+    amount_cents: 12000
+    currency: usd
+    description: "Order #2001"

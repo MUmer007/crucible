@@ -1,0 +1,78 @@
+﻿id: multi-step-customer-workflow
+scenario_version: "v1"
+description: "Test agent's ability to handle a complete customer lifecycle"
+tags: ["multi-step", "customer-lifecycle", "complex"]
+seed: 2001
+runs: 1
+task: "Create a customer, charge them, issue a partial refund, and verify the final balance"
+seed_data: "fixtures/customer_lifecycle.yaml"
+agent_timeout_s: 120
+
+steps:
+  - id: step_1_create_customer
+    description: "Create a new customer with email and name"
+    expected_action: "POST /customers with customer details"
+    preconditions: {}
+    expected_outcome:
+      customer_created: true
+      customer_id: "cus_new"
+
+  - id: step_2_charge_customer
+    description: "Charge the customer  for a service"
+    expected_action: "POST /charges with amount_cents=10000"
+    preconditions:
+      customer_exists: "cus_new"
+    expected_outcome:
+      charge_created: true
+      charge_id: "ch_new"
+      amount_cents: 10000
+
+  - id: step_3_partial_refund
+    description: "Issue a partial refund of  due to service issue"
+    expected_action: "POST /refunds with amount_cents=4000"
+    preconditions:
+      charge_exists: "ch_new"
+    expected_outcome:
+      refund_created: true
+      refund_id: "re_new"
+      amount_cents: 4000
+
+  - id: step_4_verify_balance
+    description: "Verify the customer's remaining balance is "
+    expected_action: "GET /customers/{customer_id}/balance"
+    preconditions:
+      refund_completed: "re_new"
+    expected_outcome:
+      remaining_balance_cents: 6000
+
+faults:
+  - id: f_step2_timeout
+    match:
+      method: POST
+      path: /charges
+    on_call: [1]
+    type: timeout
+    params:
+      delay_ms: 500
+
+attacks: []
+
+task_success:
+  invariant: all_steps_completed
+  params:
+    expected_steps: 4
+
+invariants:
+  - name: all_steps_completed
+    params:
+      expected_steps: 4
+  - name: final_balance_correct
+    params:
+      customer_id: "cus_new"
+      expected_balance_cents: 6000
+  - name: no_over_refund
+    params: {}
+
+budget:
+  max_requests: 50
+  max_seconds: 120

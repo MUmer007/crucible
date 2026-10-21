@@ -1,0 +1,101 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Packaging / build output
+build/
+dist/
+*.egg
+*.egg-info/
+.eggs/
+*.whl
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.uv/
+
+# Secrets / local config
+.env
+.env.*
+!.env.example
+
+# Tooling caches
+.cache/
+.pip/
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyright/
+.ruff_cache/
+.pyre/
+.pytype/
+.hypothesis/
+.tox/
+.nox/
+
+# Coverage / generated reports
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+nosetests.xml
+*.cover
+reports/
+runs/
+
+# Editor temporaries and backups (catches *.py.<timestamp>.<tag>.bak too)
+*.bak
+*.bak.*
+*.tmp
+*.temp
+*.swp
+*.swo
+*.orig
+*.rej
+*~
+
+# Local databases and logs
+*.db
+*.sqlite
+*.sqlite3
+*.log
+logs/
+
+# IDE / editor settings
+.idea/
+.vscode/
+.spyderproject
+.spyproject
+.ropeproject
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Notebooks / docs builds
+.ipynb_checkpoints/
+docs/_build/
+site/
+
+# Celery / IPython
+celerybeat-schedule
+celerybeat.pid
+profile_default/
+ipython_config.py
+
+# Crucible: one-off local drivers
+run_*.py
+deploy_*.py
+mock_agent.py
+scratch/

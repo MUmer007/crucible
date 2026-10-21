@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Runs - Crucible</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem("cr-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+:root{--bg:#f6f7f9;--s1:#fff;--s2:#f9fafb;--bd:#e4e7ec;--tx:#101828;--mu:#667085;--ac:#4f46e5;--acs:#eef2ff;--ok:#067647;--oks:#ecfdf3;--bad:#b42318;--bads:#fef3f2;--wn:#b54708;--wns:#fffaeb;--sh:0 1px 2px rgba(16,24,40,.06);--sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Consolas,monospace;color-scheme:light}
+:root[data-theme=dark]{--bg:#0a0c10;--s1:#10131a;--s2:#141821;--bd:#222834;--tx:#e8ebf1;--mu:#8a93a6;--ac:#8b9bff;--acs:#1a2040;--ok:#4ade80;--oks:#0f2a1b;--bad:#f87171;--bads:#2d1416;--wn:#fbbf24;--wns:#2b2110;--sh:none;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{font:400 14px/1.5 var(--sans);color:var(--tx);background:var(--bg);font-feature-settings:"cv11","ss01","tnum";-webkit-font-smoothing:antialiased;letter-spacing:-.006em}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px;border-radius:6px}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--bd)}
+.bar{max-width:1320px;margin:0 auto;padding:0 24px;height:56px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;letter-spacing:-.02em}
+.brand svg{width:24px;height:24px}
+.env{font-size:12px;font-weight:500;color:var(--mu);border:1px solid var(--bd);border-radius:999px;padding:2px 10px}
+.sp{flex:1}
+.ibtn{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border:1px solid var(--bd);background:var(--s1);border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;box-shadow:var(--sh)}
+.ibtn:hover{background:var(--s2)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--mu)}
+.live.on .dot{background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 25%,transparent)}
+main{max-width:1320px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;line-height:32px;font-weight:650;letter-spacing:-.025em}
+.sub{color:var(--mu);margin-top:2px;max-width:62ch}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin:24px 0}
+.kpi{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px 18px;box-shadow:var(--sh);min-width:0}
+.kpi .l{font-size:13px;color:var(--mu);font-weight:500}
+.kpi .v{font-size:28px;line-height:36px;font-weight:650;letter-spacing:-.03em;margin-top:4px}
+.kpi .v small{font-size:14px;font-weight:500;color:var(--mu);margin-left:2px;letter-spacing:0}
+.kpi .n{font-size:12px;color:var(--mu);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi svg{display:block;width:100%;height:28px;margin-top:8px}
+.panel{background:var(--s1);border:1px solid var(--bd);border-radius:12px;box-shadow:var(--sh);overflow:hidden}
+.tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:14px 16px;border-bottom:1px solid var(--bd)}
+.search{position:relative;flex:1 1 240px;max-width:340px}
+.search input{width:100%;height:34px;padding:0 34px 0 34px;border:1px solid var(--bd);background:var(--s2);border-radius:8px}
+.search input::placeholder{color:var(--mu)}
+.search svg{position:absolute;left:10px;top:9px;width:16px;height:16px;color:var(--mu)}
+.search kbd{position:absolute;right:8px;top:7px;font:500 11px var(--mono);color:var(--mu);border:1px solid var(--bd);border-radius:4px;padding:0 5px;background:var(--s1)}
+.seg{display:inline-flex;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:2px}
+.seg button{border:0;background:none;height:28px;padding:0 12px;border-radius:6px;cursor:pointer;color:var(--mu);font-size:13px;font-weight:500}
+.seg button[aria-pressed=true]{background:var(--s1);color:var(--tx);box-shadow:0 1px 2px rgba(0,0,0,.18)}
+select{height:34px;border:1px solid var(--bd);background:var(--s2);border-radius:8px;padding:0 10px}
+.chk{display:inline-flex;align-items:center;gap:8px;color:var(--mu);cursor:pointer;font-size:13px}
+.chk input{accent-color:var(--ac);width:15px;height:15px}
+.wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:1040px}
+th{position:sticky;top:0;text-align:left;font-size:12px;font-weight:500;color:var(--mu);padding:10px 16px;background:var(--s2);border-bottom:1px solid var(--bd);white-space:nowrap;user-select:none}
+th button{all:unset;cursor:pointer;display:inline-flex;gap:4px;align-items:center}
+th button:hover{color:var(--tx)}
+th[aria-sort] button{color:var(--tx)}
+th.r,td.r{text-align:right}
+td{padding:12px 16px;border-bottom:1px solid var(--bd);vertical-align:middle;white-space:nowrap}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--s2)}
+tbody tr:last-child td{border-bottom:0}
+.id{font:500 12px var(--mono);color:var(--tx);letter-spacing:0}
+.cp{all:unset;cursor:pointer;color:var(--mu);margin-left:6px;vertical-align:middle;display:inline-flex}
+.cp:hover{color:var(--tx)}
+.sc{font-weight:500}
+.ver{font-size:12px;color:var(--mu);font-family:var(--mono)}
+.b{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:999px;font-size:12px;font-weight:500;border:1px solid transparent}
+.b i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.ok{color:var(--ok);background:var(--oks)}.bad{color:var(--bad);background:var(--bads)}.wn{color:var(--wn);background:var(--wns)}.nu{color:var(--mu);background:var(--s2);border-color:var(--bd)}
+.run i{animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+.score{display:flex;align-items:center;gap:10px;justify-content:flex-end}
+.score b{font-weight:600;min-width:26px;text-align:right}
+.track{width:64px;height:6px;border-radius:3px;background:var(--bd);overflow:hidden}
+.track span{display:block;height:100%;border-radius:3px}
+.inv{display:flex;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;border-radius:6px;font:500 11px var(--mono);border:1px solid var(--bd);background:var(--s2);letter-spacing:0}
+.chip svg{width:12px;height:12px}
+.chip.ok{color:var(--ok)}.chip.bad{color:var(--bad)}
+.mu{color:var(--mu)}
+.empty{padding:64px 24px;text-align:center}
+.empty h3{font-size:16px;font-weight:600}
+.empty p{color:var(--mu);margin:4px auto 16px;max-width:44ch}
+.foot{display:flex;justify-content:space-between;padding:12px 16px;color:var(--mu);font-size:12px;border-top:1px solid var(--bd)}
+.scrim{position:fixed;inset:0;background:rgba(5,7,12,.5);opacity:0;pointer-events:none;transition:opacity .2s;z-index:30}
+.scrim.open{opacity:1;pointer-events:auto}
+aside{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--s1);border-left:1px solid var(--bd);transform:translateX(100%);transition:transform .24s cubic-bezier(.2,.8,.2,1);z-index:31;display:flex;flex-direction:column}
+aside.open{transform:none}
+.dh{padding:20px 24px;border-bottom:1px solid var(--bd);display:flex;gap:12px;align-items:flex-start}
+.dh h2{font-size:16px;font-weight:600;letter-spacing:-.015em}
+.dh .id{display:block;margin-top:4px;color:var(--mu);word-break:break-all}
+.db{padding:20px 24px;overflow:auto;display:grid;gap:24px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 24px}
+.grid dt{font-size:12px;color:var(--mu)}.grid dd{font-weight:500;margin-top:2px}
+.db h3{font-size:13px;font-weight:600;margin-bottom:8px}
+.row{border:1px solid var(--bd);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.row>div{display:flex;align-items:center;gap:8px;padding:10px 12px;font-weight:500}
+.row pre{margin:0;padding:10px 12px;background:var(--s2);border-top:1px solid var(--bd);font:400 12px/1.6 var(--mono);overflow:auto;white-space:pre-wrap;word-break:break-word}
+.msg{padding:12px;border:1px solid var(--bd);border-radius:10px;background:var(--s2);max-width:65ch}
+@media(max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.kpis{grid-template-columns:1fr}main{padding:20px 16px}.env{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="bar">
+  <div class="brand"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect width="24" height="24" rx="6" fill="var(--ac)"/><path d="M8 7h8l-1.6 5.2a3 3 0 0 1-.9 1.4L12 15l-1.5-1.4a3 3 0 0 1-.9-1.4L8 7Z" fill="var(--bg)"/><path d="M9.5 17.5h5" stroke="var(--bg)" stroke-width="1.6" stroke-linecap="round"/></svg>Crucible</div>
+  <span class="env">Sandbox</span>
+  <span class="sp"></span>
+  <button class="ibtn live" id="live" aria-pressed="false" title="Refresh every 10 seconds"><span class="dot"></span>Live updates</button>
+  <button class="ibtn" id="theme" aria-label="Toggle light and dark theme">Theme</button>
+</div></header>
+
+<main>
+  <h1>Agent runs</h1>
+  <p class="sub">Every scenario run against your agent, scored on state invariants, honesty and request budget.</p>
+
+  <section class="kpis" id="kpis" aria-label="Summary"></section>
+
+  <section class="panel">
+    <div class="tools">
+      <label class="search"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>
+        <input id="q" type="search" placeholder="Search by run ID or scenario" aria-label="Search runs" autocomplete="off"><kbd>/</kbd></label>
+      <div class="seg" id="st" role="group" aria-label="Filter by result">
+        <button data-v="all">All</button><button data-v="pass">Passed</button><button data-v="fail">Failed</button><button data-v="running">Running</button>
+      </div>
+      <select id="sc" aria-label="Filter by scenario"></select>
+      <span class="sp"></span>
+      <label class="chk"><input type="checkbox" id="hide">Hide test runs</label>
+    </div>
+    <div class="wrap"><table>
+      <thead><tr id="head"></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    <div id="empty" class="empty" hidden></div>
+    <div class="foot"><span id="count"></span><span id="synced"></span></div>
+  </section>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<aside id="dr" aria-hidden="true" aria-label="Run details"></aside>
+
+<script id="runs-data" type="application/json">[{% for r in runs %}{% set a=r.Run %}{% set b=r.RunResult %}{"id":{{ a.id|string|tojson }},"scenario":{{ a.scenario_id|tojson }},"version":{{ a.scenario_version|tojson }},"status":{{ a.status|tojson }},"outcome":{{ a.agent_outcome|default("")|tojson }},"message":{{ a.agent_message|default("")|tojson }},"error":{{ a.agent_error|default("")|tojson }},"started":{{ (a.started_at.isoformat() if a.started_at else none)|tojson }},"finished":{{ (a.finished_at.isoformat() if a.finished_at else none)|tojson }},"faults":{{ (a.faults|default([]))|tojson }},"result":{% if b %}{"success":{{ b.task_success|tojson }},"honesty":{{ b.honesty|tojson }},"score":{{ b.score|tojson }},"budget":{{ b.budget_ok|tojson }},"requests":{{ b.request_count|tojson }},"wall":{{ b.wall_ms|tojson }},"invariants":{{ (b.invariants or none)|tojson }} }{% else %}null{% endif %} }{{ "," if not loop.last }}{% endfor %}]</script>
+
+<script>
+const $=s=>document.querySelector(s);
+let RUNS=[],S={q:"",st:"all",sc:"all",hide:true,k:"started",d:-1,live:false},SEL=null,SYNC=Date.now();
+try{Object.assign(S,JSON.parse(localStorage.getItem("cr-state")||"{}"))}catch(e){}
+const save=()=>{try{localStorage.setItem("cr-state",JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ICON={ok:'<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 6.5 2.3 2.2 4.7-5"/></svg>',bad:'<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m3 3 6 6M9 3 3 9"/></svg>',cp:'<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5"/><path d="M10.5 5.5v-2a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2"/></svg>'};
+const COLS=[["scenario","Scenario"],["status","Status"],["verdict","Result"],["honesty","Honesty"],["score","Score",1],["inv","Invariants"],["requests","Requests",1],["wall","Duration",1],["started","Started",1]];
+const GET={started:r=>r.t,score:r=>r.result?r.result.score:-1,wall:r=>r.result?r.result.wall:-1,requests:r=>r.result?r.result.requests:-1,scenario:r=>r.scenario,status:r=>r.state,verdict:r=>r.verdict||"",honesty:r=>r.result?r.result.honesty||"":"",inv:r=>r.result&&r.result.invariants?Object.values(r.result.invariants).filter(x=>x.passed).length:-1};
+
+function load(doc){RUNS=JSON.parse(doc.getElementById("runs-data").textContent).map(r=>{r.test=/^(test|prop)/i.test(r.scenario);r.t=r.started?Date.parse(r.started):0;r.state=r.status==="running"&&(Date.now()-r.t)/6e4>15?"stalled":r.status;r.verdict=r.result?(r.result.success?"pass":"fail"):null;return r});SYNC=Date.now()}
+const rel=t=>{if(!t)return"-";const s=(Date.now()-t)/1e3;if(s<45)return"Just now";const m=s/60;if(m<60)return Math.round(m)+" min ago";const h=m/60;if(h<24)return Math.round(h)+" h ago";return Math.round(h/24)+" d ago"};
+const dur=ms=>ms==null?"-":ms<1e3?ms+" ms":(ms/1e3).toFixed(ms<1e4?2:1)+" s";
+const full=t=>t?new Date(t).toLocaleString(undefined,{dateStyle:"medium",timeStyle:"medium"}):"-";
+const tone=s=>s>=80?"var(--ok)":s>=50?"var(--wn)":"var(--bad)";
+const badge=(c,t,x)=>`<span class="b ${c} ${x||""}"><i></i>${t}</span>`;
+function stateBadge(r){return({finished:badge("nu","Finished"),errored:badge("bad","Errored"),running:badge("wn","Running","run"),stalled:badge("nu","Stalled"),timeout:badge("bad","Timed out")})[r.state]||badge("nu",esc(r.state))}
+function honesty(r){const h=r.result&&r.result.honesty;return h==="honest"?badge("ok","Honest"):h==="dishonest"?badge("bad","Dishonest"):'<span class="mu">-</span>'}
+function verdict(r){return r.verdict==="pass"?badge("ok","Passed"):r.verdict==="fail"?badge("bad","Failed"):'<span class="mu">-</span>'}
+function chips(r){const i=r.result&&r.result.invariants;if(!i)return'<span class="mu">Not scored</span>';return'<div class="inv">'+Object.entries(i).map(([n,v])=>`<span class="chip ${v.passed?"ok":"bad"}" title="${esc(n)}: ${v.passed?"passed":"failed"}">${v.passed?ICON.ok:ICON.bad}${esc(n)}</span>`).join("")+"</div>"}
+
+function view(){const q=S.q.toLowerCase();let a=RUNS.filter(r=>(!S.hide||!r.test)&&(S.sc==="all"||r.scenario===S.sc)&&(!q||(r.id+" "+r.scenario).toLowerCase().includes(q))&&(S.st==="all"||(S.st==="pass"&&r.verdict==="pass")||(S.st==="fail"&&(r.verdict==="fail"||r.state==="errored"))||(S.st==="running"&&r.state==="running")));const g=GET[S.k]||GET.started;return a.sort((x,y)=>{const p=g(x),q2=g(y);return(p>q2?1:p<q2?-1:0)*S.d})}
+
+function kpis(a){const d=a.filter(r=>r.result),n=d.length,pct=x=>n?Math.round(100*x/n):null,ps=d.filter(r=>r.result.success).length,hs=d.filter(r=>r.result.honesty==="honest").length,avg=n?d.reduce((s,r)=>s+r.result.score,0)/n:null,w=d.map(r=>r.result.wall).sort((x,y)=>x-y),med=n?w[Math.floor(n/2)]:null,run=a.filter(r=>r.state==="running").length;
+const pts=d.slice().sort((x,y)=>x.t-y.t).slice(-30).map(r=>r.result.score);let sp="";if(pts.length>1){const X=i=>i*(200/(pts.length-1)),Y=v=>26-v/100*24;sp=`<svg viewBox="0 0 200 28" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="var(--ac)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke" points="${pts.map((v,i)=>X(i)+","+Y(v)).join(" ")}"/></svg>`}
+const K=(l,v,u,note,x)=>`<div class="kpi"><div class="l">${l}</div><div class="v">${v}<small>${u||""}</small></div><div class="n">${note}</div>${x||""}</div>`;
+$("#kpis").innerHTML=K("Runs",a.length,"",`${n} scored, ${run} running`)+K("Pass rate",pct(ps)==null?"-":pct(ps),pct(ps)==null?"":"%",n?`${ps} of ${n} scored runs`:"No scored runs yet")+K("Honest agents",pct(hs)==null?"-":pct(hs),pct(hs)==null?"":"%",n?`${hs} of ${n} scored runs`:"No scored runs yet")+K("Average score",avg==null?"-":avg.toFixed(1),avg==null?"":"/ 100",pts.length>1?`Last ${pts.length} scored runs`:"Needs two scored runs",sp)+K("Median duration",med==null?"-":dur(med).split(" ")[0],med==null?"":dur(med).split(" ")[1],"Agent wall time")}
+
+function render(){const a=view(),all=RUNS.filter(r=>!S.hide||!r.test);kpis(all.filter(r=>S.sc==="all"||r.scenario===S.sc));
+$("#head").innerHTML='<th scope="col">Run</th>'+COLS.map(([k,l,r])=>`<th scope="col" class="${r?"r":""}" ${S.k===k?`aria-sort="${S.d>0?"ascending":"descending"}"`:""}><button data-k="${k}">${l}${S.k===k?(S.d>0?" &uarr;":" &darr;"):""}</button></th>`).join("");
+$("#rows").innerHTML=a.map(r=>{const x=r.result;return`<tr tabindex="0" data-id="${esc(r.id)}"><td><span class="id">${esc(r.id.slice(0,8))}</span><button class="cp" data-cp="${esc(r.id)}" aria-label="Copy run ID" title="Copy full ID">${ICON.cp}</button></td><td><span class="sc">${esc(r.scenario)}</span> <span class="ver">${esc(r.version)}</span></td><td>${stateBadge(r)}</td><td>${verdict(r)}</td><td>${honesty(r)}</td><td class="r">${x?`<div class="score"><b>${x.score}</b><div class="track"><span style="width:${x.score}%;background:${tone(x.score)}"></span></div></div>`:'<span class="mu">-</span>'}</td><td>${chips(r)}</td><td class="r">${x?x.requests:'<span class="mu">-</span>'}</td><td class="r">${x?dur(x.wall):'<span class="mu">-</span>'}</td><td class="r" title="${esc(full(r.t))}">${rel(r.t)}</td></tr>`}).join("");
+const em=$("#empty");em.hidden=a.length>0;if(!a.length){const none=!RUNS.length;em.innerHTML=none?'<h3>No runs yet</h3><p>Run a scenario against your agent and the results will appear here.</p><code class="id">uv run crucible run --scenario fixtures/sample_scenario.yaml --agent-url http://localhost:8001</code>':'<h3>No runs match these filters</h3><p>Try a different search, or include test runs.</p><button class="ibtn" id="reset">Clear filters</button>'}
+$("#count").textContent=`Showing ${a.length} of ${RUNS.length} runs`;$("#synced").textContent="Updated "+new Date(SYNC).toLocaleTimeString();
+$("#q").value=S.q;$("#hide").checked=S.hide;document.querySelectorAll("#st button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===S.st));
+const sc=[...new Set(RUNS.filter(r=>!S.hide||!r.test).map(r=>r.scenario))].sort();if(S.sc!=="all"&&!sc.includes(S.sc))S.sc="all";$("#sc").innerHTML='<option value="all">All scenarios</option>'+sc.map(s=>`<option ${s===S.sc?"selected":""}>${esc(s)}</option>`).join("");
+$("#live").classList.toggle("on",S.live);$("#live").setAttribute("aria-pressed",S.live)}
+
+function open(id){const r=RUNS.find(x=>x.id===id);if(!r)return;SEL=id;const x=r.result,inv=x&&x.invariants?Object.entries(x.invariants):[];
+$("#dr").innerHTML=`<div class="dh"><div style="flex:1"><h2>${esc(r.scenario)} <span class="ver">${esc(r.version)}</span></h2><span class="id">${esc(r.id)}</span></div><button class="ibtn" id="close" aria-label="Close details">Close</button></div><div class="db">
+<div style="display:flex;gap:8px;flex-wrap:wrap">${stateBadge(r)}${verdict(r)}${honesty(r)}</div>
+<dl class="grid"><div><dt>Score</dt><dd>${x?x.score+" / 100":"-"}</dd></div><div><dt>Requests</dt><dd>${x?x.requests+(x.budget===false?" (over budget)":""):"-"}</dd></div><div><dt>Duration</dt><dd>${x?dur(x.wall):"-"}</dd></div><div><dt>Started</dt><dd>${esc(full(r.t))}</dd></div><div><dt>Agent outcome</dt><dd>${esc(r.outcome||"-")}</dd></div><div><dt>Injected faults</dt><dd>${r.faults.length?r.faults.map(f=>esc(f.type)).join(", "):"None"}</dd></div></dl>
+${r.message?`<div><h3>Agent message</h3><p class="msg">${esc(r.message)}</p></div>`:""}${r.error?`<div><h3>Error</h3><p class="msg" style="color:var(--bad)">${esc(r.error)}</p></div>`:""}
+<div><h3>Invariants</h3>${inv.length?inv.map(([n,v])=>`<div class="row"><div><span class="chip ${v.passed?"ok":"bad"}">${v.passed?ICON.ok:ICON.bad}${v.passed?"Passed":"Failed"}</span>${esc(n)}</div>${v.evidence&&Object.keys(v.evidence).length?`<pre>${esc(JSON.stringify(v.evidence,null,2))}</pre>`:""}</div>`).join(""):'<p class="mu">This run has not been scored.</p>'}</div></div>`;
+$("#dr").classList.add("open");$("#scrim").classList.add("open");$("#dr").setAttribute("aria-hidden","false");$("#close").focus()}
+function shut(){SEL=null;$("#dr").classList.remove("open");$("#scrim").classList.remove("open");$("#dr").setAttribute("aria-hidden","true")}
+
+document.addEventListener("click",e=>{const t=e.target,cp=t.closest("[data-cp]"),k=t.closest("[data-k]"),tr=t.closest("tbody tr"),sb=t.closest("#st button");
+if(cp){e.stopPropagation();try{navigator.clipboard.writeText(cp.dataset.cp)}catch(x){}return}
+if(k){S.d=S.k===k.dataset.k?-S.d:(["scenario","status","verdict","honesty"].includes(k.dataset.k)?1:-1);S.k=k.dataset.k;save();return render()}
+if(sb){S.st=sb.dataset.v;save();return render()}
+if(t.closest("#reset")){S.q="";S.st="all";S.sc="all";S.hide=false;save();return render()}
+if(t.closest("#close")||t===$("#scrim"))return shut();
+if(tr)open(tr.dataset.id)});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")shut();if(e.key==="/"&&!/INPUT|SELECT/.test(document.activeElement.tagName)){e.preventDefault();$("#q").focus()}if(e.key==="Enter"&&document.activeElement.matches("tbody tr"))open(document.activeElement.dataset.id)});
+$("#q").addEventListener("input",e=>{S.q=e.target.value;save();render();$("#q").focus()});
+$("#sc").addEventListener("change",e=>{S.sc=e.target.value;save();render()});
+$("#hide").addEventListener("change",e=>{S.hide=e.target.checked;save();render()});
+$("#live").addEventListener("click",()=>{S.live=!S.live;save();render()});
+$("#theme").addEventListener("click",()=>{const t=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=t;try{localStorage.setItem("cr-theme",t)}catch(e){}});
+setInterval(async()=>{if(!S.live||document.hidden)return;try{const h=await(await fetch(location.href,{cache:"no-store"})).text();load(new DOMParser().parseFromString(h,"text/html"));render();if(SEL)open(SEL)}catch(e){}},10000);
+setInterval(()=>{if(!document.hidden)render()},60000);
+load(document);if(S.hide&&RUNS.length&&RUNS.every(r=>r.test))S.hide=false;render();
+</script>
+</body>
+</html>
